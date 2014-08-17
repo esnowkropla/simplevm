@@ -1,10 +1,11 @@
 use std::io::{File};
 use std::slice;
 use std::fmt;
+use std::num::FromPrimitive;
 
-#[deriving(Show)]
+#[deriving(Show, FromPrimitive)]
 enum OPCode {
-    NOP,
+    NOP = 0x00,
     PUSH,
     POP,
     LOAD,
@@ -139,22 +140,25 @@ impl VM {
         loop {
             println!("{}", self);
             println!("Stack: {}\n", self.stack.slice(0,10));
-            match self.instructions[self.ip] {
-                0x00 => (),
-                0x01 => self.push(), 
-                0x02 => self.bare_pop(),
-                0x03 => self.load(),
-                0x04 => self.store(),
-                0x05 => self.jump(),
-                0x06 => self.jz(),
-                0x07 => self.jnz(),
-                0x08 => self.add(),
-                0x09 => self.sub(),
-                0x0a => self.mul(),
-                0x0b => self.div(),
-                0x0c => self.print(),
-                0x0d => break,
-                x => println!("Encountered {}", x)
+            let op: Option<OPCode> = FromPrimitive::from_u8(self.instructions[self.ip]);
+            match op {
+                Some(code) => match code {
+                    NOP => (),
+                    PUSH => self.push(), 
+                    POP => self.bare_pop(),
+                    LOAD => self.load(),
+                    STORE => self.store(),
+                    JMP => self.jump(),
+                    JZ => self.jz(),
+                    JNZ => self.jnz(),
+                    ADD => self.add(),
+                    SUB => self.sub(),
+                    MUL => self.mul(),
+                    DIV => self.div(),
+                    PRINT => self.print(),
+                    STOP => break,
+                },
+                None => println!("Invalid OPCode encountered at {}", self.ip)
             }
             i += 1;
             //if i > 15 {break;}
