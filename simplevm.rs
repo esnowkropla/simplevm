@@ -136,10 +136,8 @@ impl VM {
     }
 
     fn execute(&mut self) -> () {
-        let mut i = 0u;
         loop {
-            println!("{}", self);
-            println!("Stack: {}\n", self.stack.slice(0,10));
+            println!("{}\nStack: {}\n", self, self.stack.slice(0,10));
             let op: Option<OPCode> = FromPrimitive::from_u8(self.instructions[self.ip]);
             match op {
                 Some(code) => match code {
@@ -160,8 +158,6 @@ impl VM {
                 },
                 None => println!("Invalid OPCode encountered at {}", self.ip)
             }
-            i += 1;
-            //if i > 15 {break;}
         }
     }
 }
