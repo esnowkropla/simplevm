@@ -38,7 +38,7 @@ fn new() -> VM {
 
 impl VM {
     fn push(&mut self) -> () {
-        if self.sp >= 254 { fail!("Stack overflow at line {}", self.ip); }
+        if self.sp >= 254 { fail!("Stack overflow at byte {}", self.ip); }
         self.stack[self.sp] = 0;
         for i in range(0, 4) {
             self.stack[self.sp] += self.instructions[self.ip+1+i] as i32 << 8*i;
@@ -55,7 +55,7 @@ impl VM {
         if self.sp > 0 {
             self.sp -= 1;
         } else {
-            fail!("Attempted to pop empty stack at line {}", self.ip);
+            fail!("Attempted to pop empty stack at byte {}", self.ip);
         }
         self.stack[self.sp]
     }
