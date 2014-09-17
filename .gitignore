@@ -1,3 +1,5 @@
 *swp
 simplevm
 simpleasm
+Cargo.lock
+target/

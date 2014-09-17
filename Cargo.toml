@@ -1,0 +1,16 @@
+[package]
+
+name = "simplevm"
+version = "0.0.1"
+authors = ["Elliot Snow-Kropla <esnowkropla@gmail.com>"]
+
+[lib]
+name = "simplevm"
+
+[[bin]]
+name = "simplevm"
+path = "src/simplevm.rs"
+
+[[bin]]
+name = "simpleasm"
+path = "src/simpleasm.rs"

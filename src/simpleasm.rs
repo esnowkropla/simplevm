@@ -1,6 +1,5 @@
 use std::os;
 use std::io::{File, BufferedReader};
-use std::string::String;
 
 fn main() {
     let args = os::args();
@@ -10,9 +9,10 @@ fn main() {
 
     let path = Path::new(args[1].clone());
     let mut file = BufferedReader::new(File::open(&path));
-    let lines : Vec<String> = file.lines().map(|x| x.unwrap()).collect();
+    let raw = match file.read_to_string() {
+        Ok(r) => r,
+        Err(e) => fail!("Couldn't read program {}, got error {}", path.as_str().unwrap(), e)
+    };
 
-    for line in lines.iter() {
-        print!("{}", line);
-    }
+    println!("{}",raw);
 }
