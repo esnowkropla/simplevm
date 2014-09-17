@@ -11,7 +11,7 @@ fn main() {
     let mut file = BufferedReader::new(File::open(&path));
     let raw = match file.read_to_string() {
         Ok(r) => r,
-        Err(e) => fail!("Couldn't read program {}, got error {}", path.as_str().unwrap(), e)
+        Err(e) => fail!("Couldn't read program {}, got error \"{}\"", path.display(), e)
     };
 
     println!("{}",raw);
