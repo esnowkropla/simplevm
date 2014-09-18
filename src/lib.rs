@@ -3,7 +3,7 @@ use std::fmt;
 use std::num::FromPrimitive;
 
 #[deriving(Show, FromPrimitive)]
-enum OPCode {
+pub enum OPCode {
     NOP = 0x00,
     PUSH,
     POP,
@@ -18,6 +18,28 @@ enum OPCode {
     DIV,
     PRINT,
     STOP
+}
+
+impl OPCode {
+    pub fn from_str(s: &str) -> Option<OPCode> {
+        match s {
+            "nop" => Some(NOP),
+            "push" => Some(PUSH),
+            "pop" => Some(POP),
+            "load" => Some(LOAD),
+            "store" => Some(STORE),
+            "jmp" => Some(JMP),
+            "jz" => Some(JZ),
+            "jnz" => Some(JNZ),
+            "add" => Some(ADD),
+            "sub" => Some(SUB),
+            "mul" => Some(MUL),
+            "div" => Some(DIV),
+            "print" => Some(PRINT),
+            "stop" => Some(STOP),
+            _ => None
+        }
+    }
 }
 
 impl fmt::Show for VM {
